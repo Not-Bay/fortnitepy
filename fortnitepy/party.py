@@ -1217,23 +1217,17 @@ class PartyMeta(MetaBase):
         key = 'Default:RawSquadAssignments_j'
         return {key: self.set_prop(key, final)}
 
-    def set_playlist(self, playlist: Optional[str] = None, *,
-                     tournament: Optional[str] = None,
-                     event_window: Optional[str] = None,
-                     region: Optional[Region] = None) -> Dict[str, Any]:
-        data = (self.get_prop('Default:PlaylistData_j'))['PlaylistData']
+    def set_island(self, mnemonic: Optional[str] = None, *,
+                     version: Optional[int] = None) -> Dict[str, Any]:
+        data = (self.get_prop('Default:SelectedIsland_j'))['SelectedIsland']
 
-        if playlist is not None:
-            data['playlistName'] = playlist
-        if tournament is not None:
-            data['tournamentId'] = tournament
-        if event_window is not None:
-            data['eventWindowId'] = event_window
-        if region is not None:
-            data['regionId'] = region
+        if mnemonic is not None:
+            data['linkId']['mnemonic'] = mnemonic
+        if version is not None:
+            data['version'] = version
 
-        final = {'PlaylistData': data}
-        key = 'Default:PlaylistData_j'
+        final = {'SelectedIsland': data}
+        key = 'Default:SelectedIsland_j'
         return {key: self.set_prop(key, final)}
 
     def set_custom_key(self, key: str) -> Dict[str, Any]:
@@ -3640,8 +3634,7 @@ class ClientParty(PartyBase, Patchable):
         Edits multiple meta parts at once and keeps the changes for when new
         parties are created.
 
-        This example sets the custom key to ``myawesomekey`` and the playlist to Creative
-        in the Europe region.: ::
+        This example sets the custom key to ``myawesomekey`` and the playlist to Creative.: ::
 
             from functools import partial
 
@@ -3649,7 +3642,7 @@ class ClientParty(PartyBase, Patchable):
                 party = client.party
                 await party.edit_and_keep(
                     partial(party.set_custom_key, 'myawesomekey'),
-                    partial(party.set_playlist, 'Playlist_PlaygroundV2', region=fortnitepy.Region.EUROPE)
+                    partial(party.set_island, 'Playlist_PlaygroundV2')
                 )
 
         Parameters
@@ -3950,43 +3943,24 @@ class ClientParty(PartyBase, Patchable):
                 config=config,
             )
 
-    async def set_playlist(self, playlist: Optional[str] = None,
-                           tournament: Optional[str] = None,
-                           event_window: Optional[str] = None,
-                           region: Optional[Region] = None) -> None:
+    async def set_island(self, mnemonic: Optional[str] = None,
+                           version: Optional[int] = None) -> None:
         """|coro|
 
-        Sets the current playlist of the party.
+        Sets the current island of the party.
 
-        Sets the playlist to Duos EU: ::
+        Sets the island to Duos: ::
 
-            await party.set_playlist(
-                playlist='Playlist_DefaultDuo',
-                region=fortnitepy.Region.EUROPE
-            )
-
-        Sets the playlist to Arena Trios EU (Replace ``Trios`` with ``Solo``
-        for arena solo): ::
-
-            await party.set_playlist(
-                playlist='Playlist_ShowdownAlt_Trios',
-                tournament='epicgames_Arena_S13_Trios',
-                event_window='Arena_S13_Division1_Trios',
-                region=fortnitepy.Region.EUROPE
+            await party.set_island(
+                mnemonic='Playlist_DefaultDuo',
             )
 
         Parameters
         ----------
         playlist: Optional[:class:`str`]
-            The name of the playlist.
-            Defaults to :attr:`Region.EUROPE`
-        tournament: Optional[:class:`str`]
-            The tournament id.
-        event_window: Optional[:class:`str`]
-            The event window id.
-        region: Optional[:class:`Region`]
-            The region to use.
-            *Defaults to :attr:`Region.EUROPE`*
+            The island code or name of the playlist.
+        version: Optional[:class:`int`]
+            The island version.
 
         Raises
         ------
@@ -3996,14 +3970,9 @@ class ClientParty(PartyBase, Patchable):
         if self.me is not None and not self.me.leader:
             raise Forbidden('You have to be leader for this action to work.')
 
-        if region is not None:
-            region = region.value
-
-        prop = self.meta.set_playlist(
-            playlist=playlist,
-            tournament=tournament,
-            event_window=event_window,
-            region=region
+        prop = self.meta.set_island(
+            mnemonic=mnemonic,
+            version=version
         )
         if not self.edit_lock.locked():
             return await self.patch(updated=prop)
