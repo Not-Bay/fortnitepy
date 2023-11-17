@@ -1049,6 +1049,34 @@ class PartyMemberMeta(MetaBase):
         }
         key = 'Default:AthenaCosmeticLoadoutVariants_j'
         return {key: self.set_prop(key, final)}
+    
+    def set_crown_stats(self, *, 
+                        crown_wins: int = None,
+                        victory_royales: int = None,
+                        has_crown: bool = None):
+        
+        prop = self.meta.get_prop('Default:AthenaCosmeticLoadout_j')
+        data = prop['AthenaCosmeticLoadout']
+
+        for stat in data['cosmeticStats']:
+            if stat['statName'] == 'TotalVictoryCrowns':
+                if crown_wins is not None:
+                    stat['statValue'] = crown_wins
+                    continue
+
+            if stat['statName'] == 'TotalRoyalRoyales':
+                if victory_royales is not None:
+                    stat['statValue'] = victory_royales
+                    continue
+
+            if stat['statName'] == 'HasCrown':
+                if has_crown is not None:
+                    stat['statValue'] = has_crown
+                    continue
+
+        final = {'AthenaCosmeticLoadout': data}
+        key = 'Default:AthenaCosmeticLoadout_j'
+        return {key: self.set_prop(key, final)}
 
     def set_custom_data_store(self, value: list) -> Dict[str, Any]:
         final = {
@@ -1249,8 +1277,8 @@ class PartyMeta(MetaBase):
             new_privacy = {
                 **p['PrivacySettings'],
                 'partyType': _priv['partyType'],
-                'bOnlyLeaderFriendsCanJoin': _priv['onlyLeaderFriendsCanJoin'],
                 'partyInviteRestriction': _priv['inviteRestriction'],
+                'bOnlyLeaderFriendsCanJoin': _priv['onlyLeaderFriendsCanJoin'],
             }
 
             key = 'Default:PrivacySettings_j'
@@ -2758,6 +2786,40 @@ class ClientPartyMember(PartyMemberBase, Patchable):
             level=level,
             self_boost_xp=self_boost_xp,
             friend_boost_xp=friend_boost_xp
+        )
+
+        if not self.edit_lock.locked():
+            return await self.patch(updated=prop)
+        
+    async def set_crown_stats(self, crown_wins: Optional[int] = None,
+                              victory_royales: Optional[int] = None,
+                              has_crown: Optional[bool] = None):
+        
+        """|coro|
+
+        Sets the crown stats.
+
+        Parameters
+        ----------
+        crown_wins: Optional[:class:`int`]
+            Amount of wins with crown    
+        
+        victory_royales: Optional[:class:`int`]
+            Amount of wins (general)
+
+        has_crown: Optional[:class:`bool`]
+            If the client has a crown or not
+
+        Raises
+        ------
+        HTTPException
+            An error occured while requesting.
+        """
+
+        prop = self.set_crown_stats(
+            crown_wins=crown_wins,
+            victory_royales=victory_royales,
+            has_crown=has_crown
         )
 
         if not self.edit_lock.locked():
