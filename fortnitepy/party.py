@@ -576,65 +576,27 @@ class PartyMemberMeta(MetaBase):
 
         self.def_character = DefaultCharactersChapter2.get_random_name()
         self.schema = {
-            'Default:Location_s': 'PreLobby',
-            'Default:CampaignHero_j': json.dumps({
-                'CampaignHero': {
-                    'heroItemInstanceId': '',
-                    'heroType': ("FortHeroType'/Game/Athena/Heroes/{0}.{0}'"
-                                 "".format(self.def_character)),
-                },
-            }),
-            'Default:CampaignInfo_j': json.dumps({
-                'CampaignInfo': {
-                    'matchmakingLevel': 0,
-                    'zoneInstanceId': '',
-                    'homeBaseVersion': 1,
-                },
-            }),
-            'Default:MatchmakingLevel_U': '0',
-            'Default:ZoneInstanceId_s': '',
-            'Default:HomeBaseVersion_U': '1',
-            'Default:FrontendEmote_j': json.dumps({
-                'FrontendEmote': {
-                    'emoteItemDef': 'None',
-                    'emoteItemDefEncryptionKey': '',
-                    'emoteSection': -1,
-                },
-            }),
-            'Default:NumAthenaPlayersLeft_U': '0',
-            'Default:UtcTimeStartedMatchAthena_s': '0001-01-01T00:00:00.000Z',
-            'Default:LobbyState_j': json.dumps({
-                'LobbyState': {
-                    'inGameReadyCheckStatus': None,
-                    'gameReadiness': 'NotReady',
-                    'readyInputType': 'MouseAndKeyboard',
-                    'currentInputType': 'MouseAndKeyboard',
-                    'hiddenMatchmakingDelayMax': 0,
-                    'hasPreloadedAthena': False,
-                },
-            }),
-            'Default:FrontEndMapMarker_j': json.dumps({
-                'FrontEndMapMarker': {
-                    'markerLocation': {
-                        'x': 0,
-                        'y': 0,
-                    },
-                    'bIsSet': False,
-                }
+            'Default:ArbitraryCustomDataStore_j': json.dumps({
+                'ArbitraryCustomDataStore': [],
             }),
             'Default:AssistedChallengeInfo_j': json.dumps({
                 'AssistedChallengeInfo': {
                     'questItemDef': 'None',
-                    'objectivesCompleted': 0,
-                },
+                    'objectivesCompleted': 0
+                }
             }),
-            'Default:MemberSquadAssignmentRequest_j': json.dumps({
-                'MemberSquadAssignmentRequest': {
-                    'startingAbsoluteIdx': -1,
-                    'targetAbsoluteIdx': -1,
-                    'swapTargetMemberId': 'INVALID',
-                    'version': 0,
-                },
+            'Default:AthenaBannerInfo_j': json.dumps({
+                'AthenaBannerInfo': {
+                    'bannerIconId': 'standardbanner15',
+                    'bannerColorId': 'defaultcolor15',
+                    'seasonLevel': 1
+                }
+            }),
+            'Default:AthenaCosmeticLoadoutVariants_j': json.dumps({
+                'AthenaCosmeticLoadoutVariants': {
+                    'vL': {},
+                    'fT': 'false'
+                }
             }),
             'Default:AthenaCosmeticLoadout_j': json.dumps({
                 'AthenaCosmeticLoadout': {
@@ -644,38 +606,90 @@ class PartyMemberMeta(MetaBase):
                     'characterEKey': '',
                     'backpackDef': 'None',
                     'backpackEKey': '',
-                    'pickaxeDef': ("AthenaPickaxeItemDefinition'/Game/Athena/"
+                    'pickaxeEKey': ("AthenaPickaxeItemDefinition'/Game/Athena/"
                                    "Items/Cosmetics/Pickaxes/"
                                    "DefaultPickaxe.DefaultPickaxe'"),
-                    'pickaxeEKey': '',
                     'contrailDef': 'None',
                     'contrailEKey': '',
                     'scratchpad': [],
-                },
-            }),
-            'Default:AthenaCosmeticLoadoutVariants_j': json.dumps({
-                'AthenaCosmeticLoadoutVariants': {
-                    'vL': {}
+                    'cosmeticStats': [
+                        {
+                            'statName': 'TotalVictoryCrowns',
+                            'statValue': 0
+                        },
+                        {
+                            'statName': 'TotalRoyalRoyales',
+                            'statValue': 0
+                        },
+                        {
+                            'statName': 'HasCrown',
+                            'statValue': 0
+                        }
+                    ]
                 }
-            }),
-            'Default:ArbitraryCustomDataStore_j': json.dumps({
-                'ArbitraryCustomDataStore': []
-            }),
-            'Default:AthenaBannerInfo_j': json.dumps({
-                'AthenaBannerInfo': {
-                    'bannerIconId': 'standardbanner15',
-                    'bannerColorId': 'defaultcolor15',
-                    'seasonLevel': 1,
-                },
             }),
             'Default:BattlePassInfo_j': json.dumps({
                 'BattlePassInfo': {
-                    'bHasPurchasedPass': False,
+                    'bHasPurchasedPass': 'false',
                     'passLevel': 1,
                     'selfBoostXp': 0,
                     'friendBoostXp': 0,
+                }
+            }),
+            'Default:CampaignHero_j': json.dumps({
+                'CampaignHero': {
+                    'heroItemInstanceId': '',
+                    'heroType': ("FortHeroType'/Game/Athena/Heroes/{0}.{0}'"
+                                 "".format(self.def_character))
+                }
+            }),
+            'Default:CampaignInfo_j': json.dumps({
+                'CampaignInfo': {
+                    'matchmakingLevel': 0,
+                    'zoneInstanceId': '',
+                    'homeBaseVersion': 1
+                }
+            }),
+            'Default:CrossplayPreference_s': 'OptedIn',
+            'Default:FeatDefinition_s': 'None',
+            'Default:FrontEndMapMarker': json.dumps({
+                'FrontendMapMarker': {
+                    'markerLocation': {
+                        'x': 0,
+                        'y': 0
+                    },
+                    'bIsSet': 'false'
+                }
+            }),
+            'Default:FrontendEmote_j': json.dumps({
+                'FrontendEmote': {
+                    'emoteItemDef': 'None',
+                    'emoteEKey': '',
+                    'emoteSection': -1
+                }
+            }),
+            'Default:HasCompletedSTWTutorial_b': 'false',
+            'Default:HasPurchasedSTW_b': 'false',
+            'Default:LobbyState_j': json.dumps({
+                'LobbyState': {
+                    'inGameReadyCheckStatus': 'None',
+                    'gameReadiness': 'NotReady',
+                    'readyInputType': 'Count',
+                    'currentInputType': 'MouseAndKeyboard',
+                    'hiddenMatchmakingDelayMax': 0,
+                    'hasPreloadedAthena': 'false'
+                }
+            }),
+            'Default:Location_s': 'PreLobby',
+            'Default:MemberSquadAssignmentRequest_j': json.dumps({
+                'MemberSquadAssignmentRequest': {
+                    'startingAbsoluteIdx': -1,
+                    'targetAbsoluteIdx': -1,
+                    'swapTargetMemberId': 'INVALID',
+                    'version': 0,
                 },
             }),
+            'Default:NumAthenaPlayersLeft_U': 0,
             'Default:PlatformData_j': json.dumps({
                 'PlatformData': {
                     'platform': {
@@ -686,19 +700,29 @@ class PartyMemberMeta(MetaBase):
                             'sessionType': '',
                             'externalAccountType': '',
                             'crossplayPool': 'DESKTOP'
-                        },
+                        }
                     },
                     'uniqueId': 'INVALID',
                     'sessionId': ''
-                },
+                }
             }),
-            'Default:CrossplayPreference_s': 'OptedIn',
-            'Default:VoiceChatEnabled_b': 'true',
-            'Default:VoiceConnectionId_s': '',
-            'Default:SpectateAPartyMemberAvailable_b': 'false',
-            'Default:FeatDefinition_s': 'None',
+            'Default:PlatformSupportsSTW_b': 'true',
+            'Default:SharedQuests_j': json.dumps({
+                'SharedQuests': {
+                    'bcktMap': {
+                        'BR': {
+                            'qsts': []
+                        }
+                    },
+                    'pndQst': ''
+                }
+            }),
             'Default:SidekickStatus_s': 'None',
-            'Default:VoiceChatStatus_s': 'Disabled',
+            'Default:SpectateAPartyMemberAvailable_b': 'false',
+            'Default:SubGame_s': 'Athena',
+            'Default:UtcTimeStartedMatchAthena_s': '0001-01-01T00:00:00.000Z',
+            'Default:VoiceChatStatus_s': 'PartyVoice',
+            'Default:voicechatmuted_b': 'false'
         }
 
         if meta is not None:
