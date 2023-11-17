@@ -1080,34 +1080,41 @@ class PartyMeta(MetaBase):
         self.schema = {
             'Default:PrimaryGameSessionId_s': '',
             'Default:PartyState_s': 'BattleRoyaleView',
-            'Default:LobbyConnectionStarted_b': 'false',
-            'Default:MatchmakingResult_s': 'NoResults',
-            'Default:MatchmakingState_s': 'NotMatchmaking',
-            'Default:SessionIsCriticalMission_b': 'false',
-            'Default:ZoneTileIndex_U': '-1',
+            'Default:CampaignInfo_j': json.dumps({
+                'CampaignInfo': {
+                    'lobbyConnectionStarted': 'false',
+                    'matchmakingResult': 'NoResults',
+                    'matchmakingState': 'NotMatchmaking',
+                    'sessionIsCriticalMission': 'false',
+                    'zoneTileIndex': -1,
+                    'theaterId': '',
+                }
+            }),
             'Default:ZoneInstanceId_s': '',
-            'Default:SpectateAPartyMemberAvailable_b': 'false',
-            'Default:TheaterId_s': '',
             'Default:TileStates_j': json.dumps({
                 'TileStates': [],
             }),
             'Default:MatchmakingInfoString_s': '',
             'Default:CustomMatchKey_s': '',
-            'Default:PlaylistData_j': json.dumps({
-                'PlaylistData': {
-                    'playlistName': 'Playlist_DefaultDuo',
-                    'tournamentId': '',
-                    'eventWindowId': '',
-                    'regionId': 'EU',
-                },
+            'Default:SelectedIsland_j': json.dumps({
+                'SelectedIsland': {
+                    'linkId': {
+                        'mnemonic': 'playlist_defaultduo',
+                        'version': -1
+                    },
+                    'sessionId': '',
+                    'joinInfo': {
+                        'islandJoinability': 'CanNotBeJoinedOrWatched',
+                        'sessionKey': '',
+                    },
+                }
             }),
             'Default:AthenaSquadFill_b': 'true',
             'Default:AllowJoinInProgress_b': 'false',
             'Default:LFGTime_s': '0001-01-01T00:00:00.000Z',
-            'Default:PartyIsJoinedInProgress_b': 'false',
             'Default:GameSessionKey_s': '',
             'Default:RawSquadAssignments_j': json.dumps({
-                'RawSquadAssignments': []
+                'RawSquadAssignments': [],
             }),
             'Default:PrivacySettings_j': json.dumps({
                 'PrivacySettings': privacy_settings,
@@ -1115,17 +1122,24 @@ class PartyMeta(MetaBase):
             'Default:PlatformSessions_j': json.dumps({
                 'PlatformSessions': [],
             }),
+            'VoiceChat:implementation_s': 'VivoxVoiceChat',
+            'Default:CreativeDiscoverySurfaceRevisions_j': json.dumps({
+                'CreativeDiscoverySurfaceRevisions': [],
+            }),
             'Default:PartyMatchmakingInfo_j': json.dumps({
                 'PartyMatchmakingInfo': {
                     'buildId': -1,
                     'hotfixVersion': -1,
                     'regionId': '',
                     'playlistName': 'None',
+                    'playlistRevision': 0,
                     'tournamentId': '',
                     'eventWindowId': '',
                     'linkCode': '',
                 }
             }),
+            'Default:RegionId_s': '',
+            'Default:CurrentRegionId_s': '',
         }
 
         if meta is not None:
