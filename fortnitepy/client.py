@@ -3247,7 +3247,8 @@ class Client(BasicClient):
         """
         return self.get_blocked_user(user_id) is not None
 
-    async def accept_friend(self, user_id: str) -> Friend:
+    async def accept_friend(self, user_id: str,
+                            timeout: Optional[int] = None) -> Friend:
         """|coro|
 
         .. warning::
@@ -3261,6 +3262,10 @@ class Client(BasicClient):
         ----------
         user_id: :class:`str`
             The id of the user you want to accept.
+
+        timeout: :class:`int`
+            How many seconds to wait for before asyncio.TimeoutError is raised.
+            *Defaults to ``None`` which means it will wait forever.*
 
         Raises
         ------
@@ -3276,6 +3281,8 @@ class Client(BasicClient):
             because of the users settings.
         HTTPException
             An error occured while requesting to accept this friend.
+        asyncio.TimeoutError
+            No event was retrieved in the time you specified.
 
         Returns
         -------
@@ -3284,7 +3291,8 @@ class Client(BasicClient):
         """
         await super().add_friend(user_id)
         friend = await self.wait_for('friend_add',
-                                     check=lambda f: f.id == user_id)
+                                     check=lambda f: f.id == user_id,
+                                     timeout=timeout)
         return friend
 
     async def _reconnect_to_party(self, data: Optional[dict] = None) -> None:
