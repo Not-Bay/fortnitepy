@@ -595,24 +595,24 @@ class PartyMemberMeta(MetaBase):
             'Default:AthenaCosmeticLoadoutVariants_j': json.dumps({
                 'AthenaCosmeticLoadoutVariants': {
                     'vL': {},
-                    'fT': 'false'
+                    'fT': False
                 }
             }),
             'Default:AthenaCosmeticLoadout_j': json.dumps({
                 'AthenaCosmeticLoadout': {
-                    'characterDef': ("AthenaCharacterItemDefinition'/Game/"
-                                     "Athena/Items/Cosmetics/Characters/"
-                                     "{0}.{0}'".format(self.def_character)),
+                    'characterPrimaryAssetId': 'AthenaCharacter:{0}'.format(self.def_character),
                     'characterEKey': '',
                     'backpackDef': 'None',
                     'backpackEKey': '',
-                    'pickaxeEKey': ("AthenaPickaxeItemDefinition'/Game/Athena/"
-                                   "Items/Cosmetics/Pickaxes/"
-                                   "DefaultPickaxe.DefaultPickaxe'"),
+                    'pickaxeEKey': '/Game/Athena/Items/Cosmetics/Pickaxes/DefaultPickaxe.DefaultPickaxe',
                     'contrailDef': 'None',
                     'contrailEKey': '',
                     'scratchpad': [],
                     'cosmeticStats': [
+                        {
+                            'statName': 'HabaneroProgression',
+                            'statValue': 0
+                        },
                         {
                             'statName': 'TotalVictoryCrowns',
                             'statValue': 0
@@ -630,7 +630,7 @@ class PartyMemberMeta(MetaBase):
             }),
             'Default:BattlePassInfo_j': json.dumps({
                 'BattlePassInfo': {
-                    'bHasPurchasedPass': 'false',
+                    'bHasPurchasedPass': False,
                     'passLevel': 1,
                     'selfBoostXp': 0,
                     'friendBoostXp': 0,
@@ -639,8 +639,7 @@ class PartyMemberMeta(MetaBase):
             'Default:CampaignHero_j': json.dumps({
                 'CampaignHero': {
                     'heroItemInstanceId': '',
-                    'heroType': ("FortHeroType'/Game/Athena/Heroes/{0}.{0}'"
-                                 "".format(self.def_character))
+                    'heroType': '/Game/Athena/Heroes/{0}.{0}'.format(self.def_character)
                 }
             }),
             'Default:CampaignInfo_j': json.dumps({
@@ -665,19 +664,20 @@ class PartyMemberMeta(MetaBase):
                 'FrontendEmote': {
                     'emoteItemDef': 'None',
                     'emoteEKey': '',
-                    'emoteSection': -1
+                    'emoteSection': -2,
+                    'multipurposeEmoteData': -1
                 }
             }),
-            'Default:HasCompletedSTWTutorial_b': 'false',
-            'Default:HasPurchasedSTW_b': 'false',
+            'Default:HasCompletedSTWTutorial_b': False,
+            'Default:HasPurchasedSTW_b': False,
             'Default:LobbyState_j': json.dumps({
                 'LobbyState': {
                     'inGameReadyCheckStatus': 'None',
                     'gameReadiness': 'NotReady',
-                    'readyInputType': 'Count',
-                    'currentInputType': 'MouseAndKeyboard',
+                    'readyInputType': 'Touch',
+                    'currentInputType': 'Touch',
                     'hiddenMatchmakingDelayMax': 0,
-                    'hasPreloadedAthena': 'false'
+                    'hasPreloadedAthena': False
                 }
             }),
             'Default:Location_s': 'PreLobby',
@@ -694,12 +694,12 @@ class PartyMemberMeta(MetaBase):
                 'PlatformData': {
                     'platform': {
                         'platformDescription': {
-                            'name': self.member.client.platform.value,
-                            'platformType': 'DESKTOP',
+                            'name': 'AND',
+                            'platformType': 'MOBILE',
                             'onlineSubsystem': 'None',
                             'sessionType': '',
                             'externalAccountType': '',
-                            'crossplayPool': 'DESKTOP'
+                            'crossplayPool': 'MOBILE'
                         }
                     },
                     'uniqueId': 'INVALID',
@@ -709,20 +709,121 @@ class PartyMemberMeta(MetaBase):
             'Default:PlatformSupportsSTW_b': 'true',
             'Default:SharedQuests_j': json.dumps({
                 'SharedQuests': {
-                    'bcktMap': {
-                        'BR': {
-                            'qsts': []
-                        }
-                    },
+                    'bcktMap': {},
                     'pndQst': ''
                 }
             }),
             'Default:SidekickStatus_s': 'None',
-            'Default:SpectateAPartyMemberAvailable_b': 'false',
+            'Default:SpectateAPartyMemberAvailable_b': False,
             'Default:SubGame_s': 'Athena',
             'Default:UtcTimeStartedMatchAthena_s': '0001-01-01T00:00:00.000Z',
             'Default:VoiceChatStatus_s': 'PartyVoice',
-            'Default:voicechatmuted_b': 'false'
+            'Default:voicechatmuted_b': False,
+            'Default:CurrentIsland_j': json.dumps({
+                'CurrentIsland': {
+                    'linkId': {
+                        'mnemonic': '',
+                        'version': -1
+                    },
+                    'worldId': {
+                        'iD': '',
+                        'ownerId': 'INVALID',
+                        'name': ''
+                    },
+                    'sessionId': '',
+                    'joinInfo': {
+                        'islandJoinability': 'CanNotBeJoinedOrWatched',
+                        'bIsWorldJoinable': False,
+                        'sessionKey': ''
+                    }
+                }
+            }),
+            'Default:FrontEndMapMarker_j': json.dumps({
+                'FrontEndMapMarker': {
+                    'markerLocation': {
+                        'x': 0,
+                        'y': 0
+                    },
+                    'bIsSet': False
+                }
+            }),
+            'Default:PackedState_j': json.dumps({
+                'PackedState': {
+                    'subGame': 'Athena',
+                    'location': 'PreLobby',
+                    'gameMode': 'None',
+                    'voiceChatStatus': 'Disabled',
+                    'hasCompletedSTWTutorial': False,
+                    'hasPurchasedSTW': False,
+                    'bReturnToLobbyAndReadyUp': False,
+                    'bAnyoneChangeSelectedExperience': False,
+                    'bDownloadOnDemandActive': False,
+                    'bIsPartyLFG': False,
+                    'bShouldRecordPartyChannel': False,
+                    'bReadyForTravel': False,
+                    'bIsInAllSelectExperiment': True
+                }
+            }),
+            'Default:FortCommonMatchmakingData_j': json.dumps({
+                'FortCommonMatchmakingData': {
+                    'linkId': {
+                        'mnemonic': '',
+                        'version': -1
+                    },
+                    'matchmakingTransaction': 'NotReady',
+                    'requester': 'INVALID',
+                    'version': 0
+                },
+                'response': 'NONE',
+                'version': 0
+            }),
+            'Default:SpectateInfo_j': {
+                'SpectateInfo': {
+                    'gameSessionId': '',
+                    'gameSessionKey': ''
+                }
+            },
+            'Default:bIsPartyUsingPartySignal_b': False,
+            'Default:FortMatchmakingMemberData_j': json.dumps({
+                'FortMatchmakingMemberData': {
+                    'request': {
+                        'members': [
+                            {
+                                'player': '',
+                                'readiness': 'NotReady',
+                                'currentGameId': {
+                                    'mnemonic': '',
+                                    'version': -1
+                                },
+                                'currentGameType': 'UNDEFINED',
+                                'currentGameSessionId': 'UNDEFINED',
+                                'version': 0
+                            }
+                        ],
+                        'requester': 'INVALID',
+                        'version': 0
+                    },
+                    'response': 'NONE',
+                    'version': 1
+                }
+            }),
+            'Default:DownloadOnDemandProgress_d': 0.0,
+            'Default:JoinMethod_s': 'Creation',
+            'Default:SuggestedLink_j': json.dumps({
+                'SuggestedLink': {
+                    'mnemonic': '',
+                    'version': -1
+                }
+            }),
+            'Default:JoinInProgressData_j': json.dumps({
+                'JoinInProgressData': {
+                    'request': {
+                        'target': 'INVALID',
+                        'time': 0
+                    },
+                    'responses': []
+                }
+            })
         }
 
         if meta is not None:
@@ -753,7 +854,7 @@ class PartyMemberMeta(MetaBase):
     @property
     def outfit(self) -> str:
         base = self.get_prop('Default:AthenaCosmeticLoadout_j')
-        return base['AthenaCosmeticLoadout'].get('characterDef', 'None')
+        return base['AthenaCosmeticLoadout'].get('characterPrimaryAssetId', 'None')
 
     @property
     def backpack(self) -> str:
@@ -1019,7 +1120,7 @@ class PartyMemberMeta(MetaBase):
         data = prop['AthenaCosmeticLoadout']
 
         if character is not None:
-            data['characterDef'] = character
+            data['characterPrimaryAssetId'] = character
         if character_ekey is not None:
             data['characterEKey'] = character_ekey
         if backpack is not None:
@@ -1134,12 +1235,16 @@ class PartyMeta(MetaBase):
             'Default:PartyState_s': 'BattleRoyaleView',
             'Default:CampaignInfo_j': json.dumps({
                 'CampaignInfo': {
-                    'lobbyConnectionStarted': 'false',
+                    'lobbyConnectionStarted': False,
                     'matchmakingResult': 'NoResults',
                     'matchmakingState': 'NotMatchmaking',
-                    'sessionIsCriticalMission': 'false',
+                    'sessionIsCriticalMission': False,
                     'zoneTileIndex': -1,
                     'theaterId': '',
+                    'tileStates': {
+                        'tileStates': [],
+                        'numSetBits': 0
+                    }
                 }
             }),
             'Default:ZoneInstanceId_s': '',
@@ -1154,6 +1259,11 @@ class PartyMeta(MetaBase):
                         'mnemonic': 'playlist_defaultduo',
                         'version': -1
                     },
+                    'worldId': {
+                        'iD': '',
+                        'ownerId': 'INVALID',
+                        'name': ''
+                    },
                     'sessionId': '',
                     'joinInfo': {
                         'islandJoinability': 'CanNotBeJoinedOrWatched',
@@ -1161,8 +1271,8 @@ class PartyMeta(MetaBase):
                     },
                 }
             }),
-            'Default:AthenaSquadFill_b': 'true',
-            'Default:AllowJoinInProgress_b': 'false',
+            'Default:AthenaSquadFill_b': False,
+            'Default:AllowJoinInProgress_b': False,
             'Default:LFGTime_s': '0001-01-01T00:00:00.000Z',
             'Default:GameSessionKey_s': '',
             'Default:RawSquadAssignments_j': json.dumps({
@@ -1192,6 +1302,81 @@ class PartyMeta(MetaBase):
             }),
             'Default:RegionId_s': '',
             'Default:CurrentRegionId_s': '',
+            'Default:PartyIsJoinedInProgress_b': False,
+            'Default:FortCommonMatchmakingData_j': json.dumps({
+                'FortCommonMatchmakingData': {
+                    'current': {
+                        'linkId': {
+                            'mnemonic': '',
+                            'version': -1
+                        },
+                        'matchmakingTransaction': 'NotReady',
+                        'requester': 'INVALID',
+                        'version': 0
+                    }
+                },
+                'phaseUsedForCommit': 'One',
+                'participantData': {
+                    'requested': {
+                        'linkId': {
+                            'mnemonic': '',
+                            'version': -1
+                        },
+                        'matchmakingTransaction': 'NotReady',
+                        'requester': 'INVALID',
+                        'version': -1
+                    },
+                    'broadcast': 'ReadyForRequests',
+                    'version': 0
+                }
+            }),
+            'Default:CreativeInGameReadyCheckStatus_s': 'None',
+            'Default:AthenaPrivateMatch_b': False,
+            'Default:FortMatchmakingMemberData_j': json.dumps({
+                'FortMatchmakingMemberData': {
+                    'current': {
+                        'members': [
+                            {
+                                'player': '',
+                                'readiness': 'NotReady',
+                                'currentGameId': {
+                                    'mnemonic': '',
+                                    'version': -1
+                                },
+                                'currentGameType': 'UNDEFINED',
+                                'currentGameSessionId': '',
+                                'version': 0
+                            }
+                        ],
+                        'requester': 'INVALID',
+                        'version': 1
+                    },
+                    'phaseUsedForCommit': 'One',
+                    'participantData': {
+                        'requested': {
+                            'members': [
+                                {
+                                    'player': '',
+                                    'readiness': 'NotReady',
+                                    'currentGameId': {
+                                        'mnemonic': '',
+                                        'version': -1
+                                    },
+                                    'currentGameType': 'UNDEFINED',
+                                    'currentGameSessionId': '',
+                                    'version': 0
+                                }
+                            ],
+                            'requester': 'INVALID',
+                            'version': 1
+                        },
+                        'broadcast': 'ReadyForRequests',
+                        'version': 1
+                    }
+                }
+            }),
+            'Default:ActivityType_s': 'BR',
+            'Default:ActivityName_s': 'Duos'
         }
 
         if meta is not None:
@@ -2209,12 +2394,11 @@ class ClientPartyMember(PartyMemberBase, Patchable):
             An error occured while requesting.
         """
         if asset is not None:
-            if asset != '' and '.' not in asset:
-                asset = ("AthenaCharacterItemDefinition'/Game/Athena/Items/"
-                         "Cosmetics/Characters/{0}.{0}'".format(asset))
+            if asset != '' and ':' not in asset:
+                asset = 'AthenaCharacter:{0}'.format(asset)
         else:
             prop = self.meta.get_prop('Default:AthenaCosmeticLoadout_j')
-            asset = prop['AthenaCosmeticLoadout']['characterDef']
+            asset = prop['AthenaCosmeticLoadout']['characterPrimaryAssetId']
 
         if enlightenment is not None:
             if len(enlightenment) != 2:
@@ -2315,7 +2499,7 @@ class ClientPartyMember(PartyMemberBase, Patchable):
         """
         if asset is not None:
             if asset != '' and '.' not in asset:
-                asset = ("AthenaBackpackItemDefinition'/Game/Athena/Items/"
+                asset = ("/Game/Athena/Items/"
                          "Cosmetics/Backpacks/{0}.{0}'".format(asset))
         else:
             prop = self.meta.get_prop('Default:AthenaCosmeticLoadout_j')
@@ -2408,8 +2592,8 @@ class ClientPartyMember(PartyMemberBase, Patchable):
         """
         if asset is not None:
             if asset != '' and '.' not in asset:
-                asset = ("AthenaPetItemDefinition'/Game/Athena/Items/"
-                         "Cosmetics/PetCarriers/{0}.{0}'".format(asset))
+                asset = ("/Game/Athena/Items/"
+                         "Cosmetics/PetCarriers/{0}.{0}".format(asset))
         else:
             prop = self.meta.get_prop('Default:AthenaCosmeticLoadout_j')
             asset = prop['AthenaCosmeticLoadout']['backpackDef']
@@ -2477,8 +2661,8 @@ class ClientPartyMember(PartyMemberBase, Patchable):
         """
         if asset is not None:
             if asset != '' and '.' not in asset:
-                asset = ("AthenaPickaxeItemDefinition'/Game/Athena/Items/"
-                         "Cosmetics/Pickaxes/{0}.{0}'".format(asset))
+                asset = ("/Game/Athena/Items/"
+                         "Cosmetics/Pickaxes/{0}.{0}".format(asset))
         else:
             prop = self.meta.get_prop('Default:AthenaCosmeticLoadout_j')
             asset = prop['AthenaCosmeticLoadout']['pickaxeDef']
@@ -2534,8 +2718,8 @@ class ClientPartyMember(PartyMemberBase, Patchable):
         """
         if asset is not None:
             if asset != '' and '.' not in asset:
-                asset = ("AthenaContrailItemDefinition'/Game/Athena/Items/"
-                         "Cosmetics/Contrails/{0}.{0}'".format(asset))
+                asset = ("/Game/Athena/Items/"
+                         "Cosmetics/Contrails/{0}.{0}".format(asset))
         else:
             prop = self.meta.get_prop('Default:AthenaCosmeticLoadout_j')
             asset = prop['AthenaCosmeticLoadout']['contrailDef']
@@ -2604,8 +2788,8 @@ class ClientPartyMember(PartyMemberBase, Patchable):
             An error occured while requesting.
         """
         if asset != '' and '.' not in asset:
-            asset = ("AthenaDanceItemDefinition'/Game/Athena/Items/"
-                     "Cosmetics/Dances/{0}.{0}'".format(asset))
+            asset = ("/Game/Athena/Items/"
+                     "Cosmetics/Dances/{0}.{0}".format(asset))
 
         prop = self.meta.set_emote(
             emote=asset,
@@ -2658,8 +2842,8 @@ class ClientPartyMember(PartyMemberBase, Patchable):
             An error occured while requesting.
         """
         if asset != '' and '.' not in asset:
-            asset = ("AthenaDanceItemDefinition'/Game/Athena/Items/"
-                     "Cosmetics/Dances/Emoji/{0}.{0}'".format(asset))
+            asset = ("/Game/Athena/Items/"
+                     "Cosmetics/Dances/Emoji/{0}.{0}".format(asset))
 
         prop = self.meta.set_emote(
             emote=asset,
@@ -2849,8 +3033,8 @@ class ClientPartyMember(PartyMemberBase, Patchable):
         """
         if quest is not None:
             if quest != '' and '.' not in quest:
-                quest = ("FortQuestItemDefinition'/Game/Athena/Items/"
-                         "Quests/DailyQuests/Quests/{0}.{0}'".format(quest))
+                quest = ("/Game/Athena/Items/"
+                         "Quests/DailyQuests/Quests/{0}.{0}".format(quest))
         else:
             prop = self.meta.get_prop('Default:AssistedChallengeInfo_j')
             quest = prop['AssistedChallengeInfo']['questItemDef']
