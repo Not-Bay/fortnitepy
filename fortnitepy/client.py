@@ -2601,7 +2601,7 @@ class Client(BasicClient):
 
         self.status = kwargs.get('status', 'Battle Royale Lobby - {party_size} / {party_max_size}')  # noqa
         self.away = kwargs.get('away', AwayStatus.ONLINE)
-        self.platform = kwargs.get('platform', Platform.WINDOWS)
+        self.platform = kwargs.get('platform', Platform.ANDROID)
         self.net_cl = kwargs.get('net_cl', '')
         self.party_version = kwargs.get('party_version', 3)
         self.party_build_id = '1:{0.party_version}:{0.net_cl}'.format(self)
